@@ -1,0 +1,227 @@
+﻿
+namespace Ascon_Ufa_Test_Spiryukov_Artem
+{
+    partial class MainForm
+    {
+        /// <summary>
+        ///  Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        ///  Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            panel_buttons = new Panel();
+            button_DBConnect = new Button();
+            button_DBdelete = new Button();
+            button_DBadd = new Button();
+            button_Property = new Button();
+            panel_TreeAndProperty = new Panel();
+            splitContainer_Tree_Property = new SplitContainer();
+            treeView1 = new TreeView();
+            panel1 = new Panel();
+            label1 = new Label();
+            listView_Properties = new ListView();
+            button_DeleteProperty = new Button();
+            button_AddProperty = new Button();
+            panel_buttons.SuspendLayout();
+            panel_TreeAndProperty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer_Tree_Property).BeginInit();
+            splitContainer_Tree_Property.Panel1.SuspendLayout();
+            splitContainer_Tree_Property.Panel2.SuspendLayout();
+            splitContainer_Tree_Property.SuspendLayout();
+            panel1.SuspendLayout();
+            SuspendLayout();
+            // 
+            // panel_buttons
+            // 
+            panel_buttons.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel_buttons.Controls.Add(button_DBConnect);
+            panel_buttons.Controls.Add(button_DBdelete);
+            panel_buttons.Controls.Add(button_DBadd);
+            panel_buttons.Controls.Add(button_Property);
+            panel_buttons.Location = new Point(12, 12);
+            panel_buttons.Name = "panel_buttons";
+            panel_buttons.Size = new Size(429, 31);
+            panel_buttons.TabIndex = 0;
+            // 
+            // button_DBConnect
+            // 
+            button_DBConnect.Location = new Point(203, 3);
+            button_DBConnect.Name = "button_DBConnect";
+            button_DBConnect.Size = new Size(136, 25);
+            button_DBConnect.TabIndex = 2;
+            button_DBConnect.Text = "Подключение";
+            button_DBConnect.UseVisualStyleBackColor = true;
+            button_DBConnect.Click += button_DBConnect_Click;
+            // 
+            // button_DBdelete
+            // 
+            button_DBdelete.Location = new Point(103, 3);
+            button_DBdelete.Name = "button_DBdelete";
+            button_DBdelete.Size = new Size(94, 25);
+            button_DBdelete.TabIndex = 1;
+            button_DBdelete.Text = "Удалить";
+            button_DBdelete.UseVisualStyleBackColor = true;
+            // 
+            // button_DBadd
+            // 
+            button_DBadd.Location = new Point(3, 3);
+            button_DBadd.Name = "button_DBadd";
+            button_DBadd.Size = new Size(94, 25);
+            button_DBadd.TabIndex = 1;
+            button_DBadd.Text = "Добавить ";
+            button_DBadd.UseVisualStyleBackColor = true;
+            // 
+            // button_Property
+            // 
+            button_Property.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button_Property.Location = new Point(344, 2);
+            button_Property.Name = "button_Property";
+            button_Property.Size = new Size(82, 26);
+            button_Property.TabIndex = 0;
+            button_Property.Text = "Свойства";
+            button_Property.UseVisualStyleBackColor = true;
+            button_Property.Click += button_Property_Click;
+            // 
+            // panel_TreeAndProperty
+            // 
+            panel_TreeAndProperty.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel_TreeAndProperty.Controls.Add(splitContainer_Tree_Property);
+            panel_TreeAndProperty.Location = new Point(15, 49);
+            panel_TreeAndProperty.Name = "panel_TreeAndProperty";
+            panel_TreeAndProperty.Size = new Size(426, 355);
+            panel_TreeAndProperty.TabIndex = 1;
+            // 
+            // splitContainer_Tree_Property
+            // 
+            splitContainer_Tree_Property.Dock = DockStyle.Fill;
+            splitContainer_Tree_Property.Location = new Point(0, 0);
+            splitContainer_Tree_Property.Name = "splitContainer_Tree_Property";
+            // 
+            // splitContainer_Tree_Property.Panel1
+            // 
+            splitContainer_Tree_Property.Panel1.Controls.Add(treeView1);
+            // 
+            // splitContainer_Tree_Property.Panel2
+            // 
+            splitContainer_Tree_Property.Panel2.Controls.Add(panel1);
+            splitContainer_Tree_Property.Size = new Size(426, 355);
+            splitContainer_Tree_Property.SplitterDistance = 140;
+            splitContainer_Tree_Property.TabIndex = 0;
+            splitContainer_Tree_Property.SplitterMoved += splitContainer_Tree_Property_SplitterMoved;
+            // 
+            // treeView1
+            // 
+            treeView1.Dock = DockStyle.Fill;
+            treeView1.Location = new Point(0, 0);
+            treeView1.Name = "treeView1";
+            treeView1.Size = new Size(140, 355);
+            treeView1.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(listView_Properties);
+            panel1.Controls.Add(button_DeleteProperty);
+            panel1.Controls.Add(button_AddProperty);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(282, 355);
+            panel1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(11, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(73, 20);
+            label1.TabIndex = 2;
+            label1.Text = "Свойства";
+            // 
+            // listView_Properties
+            // 
+            listView_Properties.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            listView_Properties.Location = new Point(3, 38);
+            listView_Properties.Name = "listView_Properties";
+            listView_Properties.Size = new Size(276, 314);
+            listView_Properties.TabIndex = 1;
+            listView_Properties.UseCompatibleStateImageBehavior = false;
+            // 
+            // button_DeleteProperty
+            // 
+            button_DeleteProperty.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button_DeleteProperty.Location = new Point(249, 5);
+            button_DeleteProperty.Name = "button_DeleteProperty";
+            button_DeleteProperty.Size = new Size(30, 29);
+            button_DeleteProperty.TabIndex = 0;
+            button_DeleteProperty.Text = "-";
+            button_DeleteProperty.UseVisualStyleBackColor = true;
+            // 
+            // button_AddProperty
+            // 
+            button_AddProperty.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button_AddProperty.Location = new Point(213, 3);
+            button_AddProperty.Name = "button_AddProperty";
+            button_AddProperty.Size = new Size(30, 29);
+            button_AddProperty.TabIndex = 0;
+            button_AddProperty.Text = "+";
+            button_AddProperty.UseVisualStyleBackColor = true;
+            // 
+            // MainForm
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(453, 416);
+            Controls.Add(panel_TreeAndProperty);
+            Controls.Add(panel_buttons);
+            MinimumSize = new Size(471, 463);
+            Name = "MainForm";
+            Text = "Ascon";
+            panel_buttons.ResumeLayout(false);
+            panel_TreeAndProperty.ResumeLayout(false);
+            splitContainer_Tree_Property.Panel1.ResumeLayout(false);
+            splitContainer_Tree_Property.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer_Tree_Property).EndInit();
+            splitContainer_Tree_Property.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ResumeLayout(false);
+        }
+
+        #endregion
+
+        private Panel panel_buttons;
+        private Button button_DBadd;
+        private Button button_Property;
+        private Button button_DBdelete;
+        private Panel panel_TreeAndProperty;
+        private SplitContainer splitContainer_Tree_Property;
+        private TreeView treeView1;
+        private Button button_DBConnect;
+        private Panel panel1;
+        private ListView listView_Properties;
+        private Button button_DeleteProperty;
+        private Button button_AddProperty;
+        private Label label1;
+    }
+}
