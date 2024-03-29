@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace Ascon_Ufa_Test_Spiryukov_Artem
@@ -13,6 +14,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         SaveFileDialog saveFileDialog;
         SqlWizard sqlWizard;
         Dictionary<int, Object> Objects;
+        int FocusNode;
         public MainForm()
         {
             InitializeComponent();
@@ -111,6 +113,9 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             }
             treeView1.Nodes.AddRange(RootNodes.ToArray());
             toolStripStatusLabel1.Text = "Подключено";
+            if (FocusNode != 0)
+                treeView1.SelectedNode = treeView1.Nodes.OfType<TreeNode>()
+                            .FirstOrDefault(node => node.Name.Equals(FocusNode.ToString()));
             UnBlcokForm();
 
             static TreeNode RecursBuildTree(Object obj)
@@ -150,8 +155,8 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            FocusNode = Int32.Parse(e.Node.Name);
             dataGridView1.Rows.Clear();
-
             foreach (Attribute property in Objects[Int32.Parse(e.Node.Name)].Attributes)
             {
                 dataGridView1.Rows.Add(property.Name, property.Value);
