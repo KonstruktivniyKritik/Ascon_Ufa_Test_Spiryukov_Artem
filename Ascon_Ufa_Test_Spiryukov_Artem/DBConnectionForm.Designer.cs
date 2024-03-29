@@ -69,7 +69,6 @@
             button_Cancel.TabIndex = 3;
             button_Cancel.Text = "Отмена";
             button_Cancel.UseVisualStyleBackColor = true;
-            button_Cancel.Click += button_Cancel_Click;
             // 
             // label_ConnectionInfo
             // 

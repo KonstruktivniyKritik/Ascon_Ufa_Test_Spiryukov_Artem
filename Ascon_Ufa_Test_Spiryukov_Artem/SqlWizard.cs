@@ -11,6 +11,11 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
     {
         string connectionString;
         SqlConnection connection;
+        SqlDataReader reader;
+        public delegate void SqlNotify();
+        public event SqlNotify Connect;
+        public event SqlNotify Disconnect;
+        public event SqlNotify Processing;
         public byte Connected
         {
             get
@@ -34,24 +39,44 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         {
         }
 
-        public async Task<bool> ConnectToDB(string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;")
+        public async Task ConnectToDB(string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;")
         {
             this.connectionString = ConnectionString;
             connection = new SqlConnection(connectionString);
             try
             {
                 await connection.OpenAsync();
-                return true;
+                Connect.Invoke();
             }
             catch
             {
-                return false;
+                Disconnect.Invoke();
             }
         }
 
         public void DisconnectFromDB()
         {
             connection.Close();
+            Disconnect.Invoke();
+        }
+
+        async public Task<SqlDataReader> ExecuteOrder(string sqlExpression)
+        {
+            if (reader != null)
+                reader.Close();
+            Processing.Invoke();
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            try
+            {
+                reader = await command.ExecuteReaderAsync();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка при обращении к базе данных");
+                reader.Close();
+                
+            }
+            return reader;
         }
     }
 }

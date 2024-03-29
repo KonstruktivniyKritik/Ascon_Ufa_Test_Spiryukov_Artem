@@ -13,10 +13,12 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
     public partial class DBConnectionForm : Form
     {
         SqlWizard SqlWizard;
+ 
         public DBConnectionForm(SqlWizard sqlWizard)
         {
             InitializeComponent();
             SqlWizard = sqlWizard;
+            SqlWizard.Connect += SqlWizard_Connect;
             if (SqlWizard.Connected == 1)
             {
                 label_ConnectionInfo.Text = "Подключено";
@@ -31,19 +33,16 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             }
         }
 
+        private void SqlWizard_Connect()
+        {
+            this.Close();
+        }
+
         private async void Connect(object sender, EventArgs e)
         {
             label_ConnectionInfo.Text = "Подключаемся...";
             button_DBConnect.Enabled = false;
-            if (await SqlWizard.ConnectToDB(textBox_ConnectionString.Text))
-                this.Close();
-            else
-            {
-                label_ConnectionInfo.Text = "Не подключено";
-                MessageBox.Show("Ошибка при подключнии");
-                button_DBConnect.Enabled = true;
-            }
-
+            SqlWizard.ConnectToDB(textBox_ConnectionString.Text);
         }
 
         private async void DisConnect(object sender, EventArgs e)
@@ -59,9 +58,5 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             button_DBConnect.Click += Connect;
         }
 
-        private void button_Cancel_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
