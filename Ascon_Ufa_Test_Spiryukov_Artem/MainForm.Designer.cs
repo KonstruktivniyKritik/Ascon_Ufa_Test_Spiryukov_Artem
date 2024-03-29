@@ -30,6 +30,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         private void InitializeComponent()
         {
             panel_buttons = new Panel();
+            button_Xml = new Button();
             button_DBConnect = new Button();
             button_DBdelete = new Button();
             button_DBadd = new Button();
@@ -47,7 +48,6 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             toolStripProgressBar1 = new ToolStripProgressBar();
-            button_Xml = new Button();
             panel_buttons.SuspendLayout();
             panel_TreeAndProperty.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer_Tree_Property).BeginInit();
@@ -73,6 +73,16 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             panel_buttons.Name = "panel_buttons";
             panel_buttons.Size = new Size(528, 43);
             panel_buttons.TabIndex = 0;
+            // 
+            // button_Xml
+            // 
+            button_Xml.Location = new Point(345, 3);
+            button_Xml.Name = "button_Xml";
+            button_Xml.Size = new Size(94, 37);
+            button_Xml.TabIndex = 3;
+            button_Xml.Text = "Xml";
+            button_Xml.UseVisualStyleBackColor = true;
+            button_Xml.Click += button_Xml_Click;
             // 
             // button_DBConnect
             // 
@@ -176,6 +186,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 0);
@@ -247,16 +258,6 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             // 
             toolStripProgressBar1.Name = "toolStripProgressBar1";
             toolStripProgressBar1.Size = new Size(100, 18);
-            // 
-            // button_Xml
-            // 
-            button_Xml.Location = new Point(345, 3);
-            button_Xml.Name = "button_Xml";
-            button_Xml.Size = new Size(94, 37);
-            button_Xml.TabIndex = 3;
-            button_Xml.Text = "Xml";
-            button_Xml.UseVisualStyleBackColor = true;
-            button_Xml.Click += button_Xml_Click;
             // 
             // MainForm
             // 
