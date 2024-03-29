@@ -9,20 +9,21 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 {
     public class SqlWizard
     {
-        string connectionString;
-        SqlConnection connection;
-        SqlDataReader reader;
+        string ConnectionString;
+        SqlConnection Connection;
+        SqlDataReader Reader;
         public delegate void SqlNotify();
         public event SqlNotify Connect;
         public event SqlNotify Disconnect;
+        public event SqlNotify Fail;
         public event SqlNotify Processing;
         public byte Connected
         {
             get
             {
-                if (connection == null)
+                if (Connection == null)
                     return 2;
-                switch (connection.State)
+                switch (Connection.State)
                 {
                     case System.Data.ConnectionState.Open:
                         return 1;
@@ -39,44 +40,44 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         {
         }
 
-        public async Task ConnectToDB(string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;")
+        public async Task ConnectToDB(string connectionString = "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;")
         {
-            this.connectionString = ConnectionString;
-            connection = new SqlConnection(connectionString);
             try
             {
-                await connection.OpenAsync();
+                ConnectionString = connectionString;
+                Connection = new SqlConnection(this.ConnectionString);
+                await Connection.OpenAsync();
                 Connect.Invoke();
             }
             catch
             {
-                Disconnect.Invoke();
+                Fail.Invoke();
             }
         }
 
         public void DisconnectFromDB()
         {
-            connection.Close();
+            Connection.Close();
             Disconnect.Invoke();
         }
 
         async public Task<SqlDataReader> ExecuteOrder(string sqlExpression)
         {
-            if (reader != null)
-                reader.Close();
+            if (Reader != null)
+                Reader.Close();
             Processing.Invoke();
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            SqlCommand Command = new SqlCommand(sqlExpression, Connection);
             try
             {
-                reader = await command.ExecuteReaderAsync();
+                Reader = await Command.ExecuteReaderAsync();
             }
             catch
             {
                 MessageBox.Show("Ошибка при обращении к базе данных");
-                reader.Close();
+                Reader.Close();
                 
             }
-            return reader;
+            return Reader;
         }
     }
 }

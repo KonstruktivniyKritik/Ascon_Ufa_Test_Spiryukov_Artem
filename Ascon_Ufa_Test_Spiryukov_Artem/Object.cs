@@ -18,13 +18,13 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         [XmlIgnore] public Object Parent;
         [XmlIgnore] public List<Object> Childs;
 
-        public Object(int Id, string Type, string Product)
+        public Object(int id, string type, string product)
         {
-            this.Type = Type;
-            this.Product = Product;
-            this.Id = Id;
-            this.Attributes = new List<Attribute>();
-            this.Childs = new List<Object>();
+            Type = type;
+            Product = product;
+            Id = id;
+            Attributes = new List<Attribute>();
+            Childs = new List<Object>();
         }
 
         public Object() {}
@@ -34,11 +34,11 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             Attributes.Add(new Attribute(name, value));
         }
 
-        public void SetParent(Object Parent)
+        public void SetParent(Object parent)
         {
-            this.Parent = Parent;
-            Parent.Childs.Add(this);
-            this.ParentId = Parent.Id;
+            Parent = parent;
+            parent.Childs.Add(this);
+            ParentId = parent.Id;
         }
     }
 
@@ -47,10 +47,10 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         public string Name { get; set; }
         public string Value { get; set; }
 
-        public Attribute(string Name, string Value)
+        public Attribute(string name, string value)
         {
-            this.Name = Name;
-            this.Value = Value;
+            Name = name;
+            Value = value;
         }
         public Attribute() { }
     }

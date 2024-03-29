@@ -19,6 +19,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             InitializeComponent();
             SqlWizard = sqlWizard;
             SqlWizard.Connect += SqlWizard_Connect;
+            SqlWizard.Fail += SqlWizard_Fail; ;
             if (SqlWizard.Connected == 1)
             {
                 label_ConnectionInfo.Text = "Подключено";
@@ -33,6 +34,13 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             }
         }
 
+        private void SqlWizard_Fail()
+        {
+            label_ConnectionInfo.Text = "Не подключено";
+            button_DBConnect.Enabled = true;
+            MessageBox.Show("Не удалось подключиться");
+        }
+
         private void SqlWizard_Connect()
         {
             this.Close();
@@ -42,7 +50,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         {
             label_ConnectionInfo.Text = "Подключаемся...";
             button_DBConnect.Enabled = false;
-            SqlWizard.ConnectToDB(textBox_ConnectionString.Text);
+            await SqlWizard.ConnectToDB(textBox_ConnectionString.Text);
         }
 
         private async void DisConnect(object sender, EventArgs e)

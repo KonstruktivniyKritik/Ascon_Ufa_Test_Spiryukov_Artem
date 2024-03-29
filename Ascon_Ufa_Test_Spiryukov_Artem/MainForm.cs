@@ -1,32 +1,27 @@
-using Microsoft.Data.SqlClient;
-using System;
 using System.Diagnostics;
-using System.Windows.Forms;
-using System.Xml.Linq;
 using System.Xml.Serialization;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace Ascon_Ufa_Test_Spiryukov_Artem
 {
     public partial class MainForm : Form
     {
-        SaveFileDialog saveFileDialog;
-        SqlWizard sqlWizard;
+        SaveFileDialog SaveFileDialog;
+        SqlWizard SqlWizard;
         Dictionary<int, Object> Objects;
         int FocusNode;
         public MainForm()
         {
             InitializeComponent();
-            sqlWizard = new SqlWizard();
-            sqlWizard.Connect += FillForm;
-            sqlWizard.Processing += BlockForm;
-            sqlWizard.Disconnect += ClearForm;
+            SqlWizard = new SqlWizard();
+            SqlWizard.Connect += FillForm;
+            SqlWizard.Processing += BlockForm;
+            SqlWizard.Disconnect += ClearForm;
             toolStripStatusLabel1.Text = "Не подключено";
             dataGridView1.Columns.Add("Name", "Название");
             dataGridView1.Columns.Add("Value", "Значение");
-            saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "XML-File | *.xml";
+            SaveFileDialog = new SaveFileDialog();
+            SaveFileDialog.Filter = "XML-File | *.xml";
             BlockForm();
         }
 
@@ -64,7 +59,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         private async void FillForm()
         {
             Objects = new Dictionary<int, Object>();
-            var reader = await sqlWizard.ExecuteOrder("SELECT * FROM Objects");
+            var reader = await SqlWizard.ExecuteOrder("SELECT * FROM Objects");
             if (reader != null && reader.HasRows) // если есть данные
             {
                 while (await reader.ReadAsync()) // построчно считываем данные
@@ -77,7 +72,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 
                 }
             }
-            reader = await sqlWizard.ExecuteOrder("SELECT * FROM Attributes");
+            reader = await SqlWizard.ExecuteOrder("SELECT * FROM Attributes");
             UnBlcokForm();
             if (reader.HasRows) // если есть данные
             {
@@ -91,7 +86,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 
                 }
             }
-            reader = await sqlWizard.ExecuteOrder("SELECT * FROM Links");
+            reader = await SqlWizard.ExecuteOrder("SELECT * FROM Links");
             if (reader.HasRows) // если есть данные
             {
                 while (await reader.ReadAsync()) // построчно считываем данные
@@ -148,7 +143,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 
         private void button_DBConnect_Click(object sender, EventArgs e)
         {
-            DBConnectionForm dBConnectionForm = new DBConnectionForm(sqlWizard);
+            DBConnectionForm dBConnectionForm = new DBConnectionForm(SqlWizard);
 
             dBConnectionForm.ShowDialog();
         }
@@ -177,9 +172,9 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 
         private async void button_DBadd_Click(object sender, EventArgs e)
         {
-            await sqlWizard.ExecuteOrder($"Insert into Objects (Type,Product) values ( 'Тип', 'Продукт')");
+            await SqlWizard.ExecuteOrder($"Insert into Objects (Type,Product) values ( 'Тип', 'Продукт')");
             if (treeView1.SelectedNode != null)
-                await sqlWizard.ExecuteOrder($"Insert into Links (parentId,childId) values ({treeView1.SelectedNode.Name}, {Objects.Keys.Max() + 1})");
+                await SqlWizard.ExecuteOrder($"Insert into Links (parentId,childId) values ({treeView1.SelectedNode.Name}, {Objects.Keys.Max() + 1})");
             ClearForm();
             FillForm();
         }
@@ -197,10 +192,10 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
 
         private async Task RecurceDeleteNodes(TreeNode Node)
         {
-            await sqlWizard.ExecuteOrder($"Delete from Attributes where objectId = {Node.Name}");
-            await sqlWizard.ExecuteOrder($"Delete from Links where parentId = {Node.Name}");
-            await sqlWizard.ExecuteOrder($"Delete from Links where childId = {Node.Name}");
-            await sqlWizard.ExecuteOrder($"Delete from Objects where id = {Node.Name}");
+            await SqlWizard.ExecuteOrder($"Delete from Attributes where objectId = {Node.Name}");
+            await SqlWizard.ExecuteOrder($"Delete from Links where parentId = {Node.Name}");
+            await SqlWizard.ExecuteOrder($"Delete from Links where childId = {Node.Name}");
+            await SqlWizard.ExecuteOrder($"Delete from Objects where id = {Node.Name}");
             foreach (TreeNode Child in Node.Nodes)
             {
                 await RecurceDeleteNodes(Child);
@@ -225,7 +220,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
             }
             while (exist);
 
-            await sqlWizard.ExecuteOrder($"Insert into Attributes (objectId, name, value) values ( {treeView1.SelectedNode.Name}, 'Новое свойство{newbee}', 'Новое значение{newbee}')");
+            await SqlWizard.ExecuteOrder($"Insert into Attributes (objectId, name, value) values ( {treeView1.SelectedNode.Name}, 'Новое свойство{newbee}', 'Новое значение{newbee}')");
             ClearForm();
             FillForm();
         }
@@ -234,7 +229,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         {
             if (dataGridView1.CurrentCell == null)
                 return;
-            await sqlWizard.ExecuteOrder($"Delete from Attributes where objectId = {treeView1.SelectedNode.Name} and name = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString()}' and value = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString()}'");
+            await SqlWizard.ExecuteOrder($"Delete from Attributes where objectId = {treeView1.SelectedNode.Name} and name = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString()}' and value = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString()}'");
             ClearForm();
             FillForm();
         }
@@ -249,7 +244,7 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
                 return;
 
             }
-            await sqlWizard.ExecuteOrder($"UPDATE Objects SET type = '{e.Label}' WHERE id= {treeView1.SelectedNode.Name}");
+            await SqlWizard.ExecuteOrder($"UPDATE Objects SET type = '{e.Label}' WHERE id= {treeView1.SelectedNode.Name}");
             ClearForm();
             FillForm();
         }
@@ -257,23 +252,23 @@ namespace Ascon_Ufa_Test_Spiryukov_Artem
         private async void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.CurrentCell.ColumnIndex == 0)
-                await sqlWizard.ExecuteOrder($"UPDATE Attributes SET name = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString()}' WHERE objectId= {treeView1.SelectedNode.Name} and value = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString()}'");
+                await SqlWizard.ExecuteOrder($"UPDATE Attributes SET name = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString()}' WHERE objectId= {treeView1.SelectedNode.Name} and value = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString()}'");
             else
-                await sqlWizard.ExecuteOrder($"UPDATE Attributes SET value = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString()}' WHERE objectId= {treeView1.SelectedNode.Name} and name = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString()}'");
+                await SqlWizard.ExecuteOrder($"UPDATE Attributes SET value = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString()}' WHERE objectId= {treeView1.SelectedNode.Name} and name = '{dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[0].Value.ToString()}'");
             ClearForm();
             FillForm();
         }
 
         private void button_Xml_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(Object[]));
-                using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(SaveFileDialog.FileName, FileMode.OpenOrCreate))
                 {
                     xmlSerializer.Serialize(fs, Objects.Values.ToArray());
                 }
-                Process.Start("explorer.exe", Path.GetDirectoryName(saveFileDialog.FileName));
+                Process.Start("explorer.exe", Path.GetDirectoryName(SaveFileDialog.FileName));
             }
         }
     }
